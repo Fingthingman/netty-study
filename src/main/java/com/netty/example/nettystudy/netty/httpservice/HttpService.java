@@ -1,11 +1,9 @@
-package com.netty.example.nettystudy.httpservice;
+package com.netty.example.nettystudy.netty.httpservice;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * @NAME: HttpService
@@ -21,7 +19,7 @@ public class HttpService {
         final ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(bossGroup,workGroup)
                 .channel(NioServerSocketChannel.class)
-                .childHandler(null);
+                .childHandler(new MyChannelInitializer());
 
         final ChannelFuture channelFuture = serverBootstrap.bind(8888).sync();
         channelFuture.channel().closeFuture().sync();

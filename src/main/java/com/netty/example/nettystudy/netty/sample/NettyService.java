@@ -8,6 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import jdk.nashorn.internal.ir.CallNode;
 
 /**
  * @NAME: NettyService
@@ -26,9 +27,12 @@ public class NettyService {
                     .option(ChannelOption.SO_BACKLOG,128)
                     .childOption(ChannelOption.SO_KEEPALIVE,true)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
+
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
+
                             ch.pipeline().addLast(new NettyServiceHandler());
+                            ch.pipeline().addLast(new NettyServiceHandler2());
                         }
                     });
             System.out.println("服务器准备完毕");
